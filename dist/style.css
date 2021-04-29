@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex-basis: 130px;
+    background-color: #DDDDDD;
+}
+
+header h1 {
+    font-size: 40px;
+}
+
+.main-container {
+    display: flex;
+}
+
+.sidebar {
+    flex-grow: 0.25;
+    height: 700px;
+    background-color: #CCCCCC;
+}
+
+footer {
+    flex-basis: 100px;
+    background-color: #777777;
+}
