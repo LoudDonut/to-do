@@ -1,23 +1,23 @@
-A project where I will practice my factory funtions and SOLID principles.
+	Your ‘todos’ are going to be objects that you’ll want to 	dynamically create, which means either using factories or constructors/classes to generate them.
 
-Todo list options:
-Add item:
-	props:
-	-title
-	-description
-	-dueDate
-	-priority (low, medium, high)
-	-notes
+    Brainstorm what kind of properties your todo-items are going to have. At a minimum they should have a title, description, dueDate and priority. You might also want to include notes or even a checklist.
 
-Add folder where items can be added inside
+    Your todo list should have projects or separate lists of todos. When a user first opens the app, there should be some sort of ‘default’ project to which all of their todos are put. Users should be able to create new projects and choose which project their todos go into.
 
-Display folder/item in the main window (display a short list of props and have a button to expand to all information)
-Rename or delete folder.
-Modify item.
+    You should separate your application logic (i.e. creating new todos, setting todos as complete, changing todo priority etc.) from the DOM-related stuff, so keep all of those things in separate modules.
 
-Also want the option to contain short one line todo's so just the title.
+    The look of the User Interface is up to you, but it should be able to do the following:
+        -view all projects
+        -view all todos in each project (probably just the title and duedate.. perhaps changing color for different priorities)
+        -expand a single todo to see/edit its details
+        -delete a todo
+    
+	For inspiration, check out the following great todo apps. (look at screenshots, watch their introduction videos etc.)
+        -Todoist
+        -Things
+        -any.do
+    Use localStorage to save user’s projects and todos between sessions.
 
-Looks:
-menu/tools on the left side with the header resting on top of it. The rest of the contents to the right of Nav also with the header resting on top is the display.
+    Since you are probably already using webpack, adding external libraries from npm is a cinch! You might want to consider using the following useful library in your code:
+        -date-fns gives you a bunch of handy functions for -formatting and manipulating dates and times.
 
-menu/tools will have things like create item, create folder then in the main window we will see our item or folder

@@ -16,8 +16,17 @@ header h1 {
     display: flex;
 }
 
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.key-container {
+    flex-grow: 0.3;
+}
+
 .sidebar {
-    flex-grow: 0.25;
+    flex-grow: 0.1;
     height: 700px;
     background-color: #CCCCCC;
 }
