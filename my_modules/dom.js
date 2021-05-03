@@ -75,4 +75,21 @@ function renderToContent(item, elemCreateFunc) {
     content.appendChild(container);
 }
 
-export { createDomItems, renderToContent }
+function displayProjects(projects) { //as an object
+    let references = {}; //remove if unneeded
+
+    for (let project in projects) {
+        let projectObj = projects[project];
+        let projectName = projectObj.name;
+
+        let button = document.createElement("button");
+        references[project] = button;
+        button.classList.add("project-buttons");
+        button.textContent = projectName;
+        sidebar.appendChild(button);
+    }
+    
+    return references;
+}
+
+export { createDomItems, renderToContent, displayProjects };

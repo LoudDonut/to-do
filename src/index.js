@@ -1,10 +1,11 @@
 import {
     createItem,
-    createProject,
+    createProject
 } from "../my_modules/item.js";
 import {
     createDomItems,
-    renderToContent
+    renderToContent,
+    displayProjects
 } from "../my_modules/dom.js";
 
 const goBike = createItem("Go Bike",
@@ -24,7 +25,24 @@ const goBike = createItem("Go Bike",
     vacation.addItem("goHome", goHome);
 
     renderToContent(goHome, createDomItems);
-    renderToContent(goBike, createDomItems);
+
+    let testObj = {
+        vacation: {name: "Vacation", items: "vacationStuff"},
+        school: {name: "School", items: "schoolStuff"},
+        groceries: {name: "Groceries", items: "shoppinglist,etc"},
+        minecraft: {name: "Minecraft", items: "ideas,todo"},
+    };
+    
+    let projectRefs = displayProjects(testObj);
+
+    for (let projectref in projectRefs) {
+        let button = projectRefs[projectref];
+        button.addEventListener("click", () => {
+            for (let item in testObj) {
+                renderToContent(testObj[item], createDomItems);
+            }
+        });
+    }
     
     
     /*const newDom = createDomItems(undefined, true);
