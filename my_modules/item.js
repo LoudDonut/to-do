@@ -40,4 +40,13 @@ function createProject(name) {
     return Object.assign(Object.create(proto), project);
 }
 
-export { createItem, createProject };
+function createProjectHolder() {
+    const proto = {
+        addProject: function(project) {
+            this[project.name] = project;
+        }
+    }
+    return Object.assign(Object.create(proto), {});
+}
+
+export { createItem, createProject, createProjectHolder };

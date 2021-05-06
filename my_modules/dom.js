@@ -85,6 +85,7 @@ function displayProjects(projects) { //as an object
         let button = document.createElement("button");
         references[project] = button;
         button.classList.add("project-buttons");
+        button.id = project;
         button.textContent = projectName;
         sidebar.appendChild(button);
     }

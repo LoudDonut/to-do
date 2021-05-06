@@ -1,54 +1,51 @@
 import {
     createItem,
-    createProject
+    createProject,
+    createProjectHolder
 } from "../my_modules/item.js";
+
 import {
     createDomItems,
     renderToContent,
     displayProjects
 } from "../my_modules/dom.js";
 
-const goBike = createItem("Go Bike",
+//Test creations
+const projectHolder = createProjectHolder();
+const vacation = createProject("vacation");
+const goBike = createItem(
+    "Go Bike",
     "Cycle around the block",
     "15/02/1998",
     "low",
-    "No notes");
-
-    const goHome = createItem("Go Home",
+    "No notes"
+);
+const goHome = createItem(
+    "Go Home",
     "Return home through the valley",
     "16/02/1998",
     "medium",
-    "there will be no notes here this time");
-    goHome.changeProp("Do it", "Kill myself");
+    "there will be no notes here this time"
+);
+vacation.addItem("goHome", goHome);
+vacation.addItem("goBike", goBike);
+projectHolder.addProject(vacation);
 
-    const vacation = createProject("vacation");
-    vacation.addItem("goHome", goHome);
+renderToContent(goHome, createDomItems);
+let projectRefs = displayProjects(projectHolder);
 
-    renderToContent(goHome, createDomItems);
+// add listener to the project buttons
+for (let projectref in projectRefs) {
+    let button = projectRefs[projectref];
+    button.addEventListener("click", (e) => {
+        let targetProject = projectHolder[e.target.id];
 
-    let testObj = {
-        vacation: {name: "Vacation", items: "vacationStuff"},
-        school: {name: "School", items: "schoolStuff"},
-        groceries: {name: "Groceries", items: "shoppinglist,etc"},
-        minecraft: {name: "Minecraft", items: "ideas,todo"},
-    };
-    
-    let projectRefs = displayProjects(testObj);
+        for (let item in targetProject) {
 
-    for (let projectref in projectRefs) {
-        let button = projectRefs[projectref];
-        button.addEventListener("click", () => {
-            for (let item in testObj) {
-                renderToContent(testObj[item], createDomItems);
+            if (item !== "name") {
+                renderToContent(targetProject[item], createDomItems);
             }
-        });
-    }
-    
-    
-    /*const newDom = createDomItems(undefined, true);
 
-    console.log(newDom);
-
-    newDom.title.textContent = "hello";
-    const content = document.querySelector(".content");
-    newDom.title.appendChild(newDom);*/
+        }
+    });
+}

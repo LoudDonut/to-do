@@ -26,6 +26,8 @@ header h1 {
 }
 
 .sidebar {
+    display: flex;
+    flex-direction: column;
     flex-grow: 0.1;
     height: 700px;
     background-color: #CCCCCC;
