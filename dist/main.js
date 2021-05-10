@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n\n\n\n\n//# sourceURL=webpack
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n\n\n\n\n//# sourceURL=webpack://to-do/./my_modules/item.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"createItem\": () => (/* binding */ createItem)\n/* harmony export */ });\nfunction createItem(\n    title,\n    description,\n    dueDate,\n    priority\n){\n    const proto = {\n        changeTitle: function(newTitle) {\n            this.title = newTitle;\n        },\n        changeDescription: function(newDesc) {\n            this.description = newDesc;\n        },\n        changeDueDate: function(newDate) {\n            this.dueDate = newDate;\n        },\n        changePriority: function(newPriority) {\n            this.priority = newPriority;\n        }\n    };\n    const item = {\n        title,\n        description,\n        dueDate,\n        priority\n    }\n    return Object.assign(Object.create(proto), item);\n}\n\n\n\n//# sourceURL=webpack://to-do/./my_modules/item.js?");
 
 /***/ }),
 
@@ -36,7 +36,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n\n\n\n\n//# sourceURL=webpack
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _my_modules_item_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../my_modules/item.js */ \"./my_modules/item.js\");\n/* harmony import */ var _my_modules_dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../my_modules/dom.js */ \"./my_modules/dom.js\");\n\n\n\n\n//# sourceURL=webpack://to-do/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _my_modules_item_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../my_modules/item.js */ \"./my_modules/item.js\");\n/* harmony import */ var _my_modules_dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../my_modules/dom.js */ \"./my_modules/dom.js\");\n\n\n\n\nconst newItem = (0,_my_modules_item_js__WEBPACK_IMPORTED_MODULE_0__.createItem)(\"bigYoshi\", \"have fun with big yoshi\",\n\"11/12/12\", \"HIGH\");\n\nconsole.log(newItem);\n\n//# sourceURL=webpack://to-do/./src/index.js?");
 
 /***/ })
 
@@ -67,6 +67,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _my_
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
