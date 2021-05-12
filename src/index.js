@@ -1,12 +1,17 @@
 import {
-    createItem //title, desc, dueDate, priority
+    createItem, //arg: title, desc, dueDate, priority
+    createProject //arg: item
 } from "../my_modules/item.js";
 
 import {
-   
+   displayItem
 } from "../my_modules/dom.js";
 
-const newItem = createItem("bigYoshi", "have fun with big yoshi",
+const playYoshi = createItem("bIg yoShi", "have fun with big yoshi",
 "11/12/12", "HIGH");
 
-console.log(newItem);
+const vacation = createProject("vacation");
+vacation.addItem(playYoshi);
+
+displayItem(vacation.bigYoshi);
+console.log(vacation);
