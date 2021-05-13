@@ -1,3 +1,7 @@
+import {
+    toCamelCase
+} from "../my_modules/string_functions";
+
 function createItem(
     title,
     description,
@@ -25,20 +29,6 @@ function createItem(
         priority
     }
     return Object.assign(Object.create(proto), item);
-}
-
-function toCamelCase(string) {
-    string = string.toLowerCase();
-    let newString = "";
-    for (let i = 0; i < string.length; i++) {
-        if (string[i] === " ") {
-            newString = newString + string[i + 1].toUpperCase();
-            i++;
-        } else {
-            newString = newString + string[i];
-        }
-    }
-    return newString;
 }
 
 function createProject(title) {

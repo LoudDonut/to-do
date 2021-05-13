@@ -4,7 +4,8 @@ import {
 } from "../my_modules/item.js";
 
 import {
-   displayItem
+   displayItem,
+   displayProject
 } from "../my_modules/dom.js";
 
 const playYoshi = createItem("bIg yoShi", "have fun with big yoshi",
@@ -15,3 +16,5 @@ vacation.addItem(playYoshi);
 
 displayItem(vacation.bigYoshi);
 console.log(vacation);
+
+displayProject(vacation);

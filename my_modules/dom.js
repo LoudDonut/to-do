@@ -1,15 +1,29 @@
+
 function displayItem(item) {
     const content = document.querySelector(".content");
     const itemContainer = document.createElement("button");
     const propList = document.createElement("ul");
+
     for (let prop in item) {
-        const itemProp = document.createElement("li");
-        console.log(prop);
-        itemProp.textContent = item[prop];
-        propList.appendChild(itemProp);
+
+        if (item.propertyIsEnumerable(prop) === true) {
+            const itemProp = document.createElement("li");
+            itemProp.textContent = item[prop];
+            propList.appendChild(itemProp);
+        }
+
     }
+
     itemContainer.appendChild(propList);
     content.appendChild(propList);
 }
 
-export { displayItem };
+function displayProject(project) {
+    const sidebar = document.querySelector(".sidebar");
+    const projectButt = document.createElement("button");
+    
+    projectButt.textContent = project.title;
+    sidebar.appendChild(projectButt);
+}
+
+export { displayItem, displayProject };
