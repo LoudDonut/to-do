@@ -6,7 +6,7 @@ import {
 import {
    displayItem,
    displayProject
-} from "../my_modules/dom.js";
+} from "../my_modules/dom.js"; 
 
 const playYoshi = createItem("bIg yoShi", "have fun with big yoshi",
 "11/12/12", "HIGH");
@@ -18,3 +18,12 @@ displayItem(vacation.bigYoshi);
 console.log(vacation);
 
 displayProject(vacation);
+
+const projects = document.querySelectorAll(".sidebar");
+
+projects.forEach(project => {
+    project.addEventListener("click", (e) => {
+        console.log(e.target.id);
+        displayItem(vacation.bigYoshi);
+    });
+});
