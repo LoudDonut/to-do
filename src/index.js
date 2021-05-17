@@ -5,9 +5,8 @@ import {
 
 import {
    displayItem,
-   displayProject,
-   removeItem
-} from "../my_modules/dom.js";
+   displayProject
+} from "../my_modules/dom.js"; 
 
 const vacation = createProject("vacation");
 const trip = createItem(
@@ -33,6 +32,12 @@ vacation.addItem(shopping);
 vacation.addItem(goBackHome);
 
 displayProject(vacation);
-displayItem(vacation.trip);
-displayItem(vacation.shopping);
-displayItem(vacation.goBackHome);
+
+const projects = document.querySelectorAll(".sidebar");
+
+projects.forEach(project => {
+    project.addEventListener("click", (e) => {
+        console.log(e.target.id);
+        displayItem(vacation.bigYoshi);
+    });
+});

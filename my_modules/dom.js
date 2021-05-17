@@ -1,8 +1,6 @@
 import {
     toCamelCase
-} from "../my_modules/string_functions"
-
-const content = document.querySelector(".content");
+} from "../my_modules/string_functions";
 
 function displayItem(item) {
     const itemContainer = document.createElement("div");
@@ -31,6 +29,7 @@ function removeItem(itemId) {
 function displayProject(project) {
     const sidebar = document.querySelector(".sidebar");
     const projectButt = document.createElement("button");
+    projectButt.id = toCamelCase(project.title);
     
     projectButt.textContent = project.title;
     sidebar.appendChild(projectButt);
