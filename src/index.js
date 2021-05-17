@@ -5,16 +5,34 @@ import {
 
 import {
    displayItem,
-   displayProject
+   displayProject,
+   removeItem
 } from "../my_modules/dom.js";
 
-const playYoshi = createItem("bIg yoShi", "have fun with big yoshi",
-"11/12/12", "HIGH");
-
 const vacation = createProject("vacation");
-vacation.addItem(playYoshi);
-
-displayItem(vacation.bigYoshi);
-console.log(vacation);
+const trip = createItem(
+    "Trip",
+    "Go to the airport, board the plane untill arrival",
+    "20/11/2022",
+    "High"
+);
+const shopping = createItem(
+    "Shopping",
+    "Go to some stores in town and look around",
+    "21/11/2022",
+    "Medium"
+);
+const goBackHome = createItem(
+    "Go back home",
+    "Go to the airport, board the plane untill we're back home",
+    "28/11/2022",
+    "High"
+);
+vacation.addItem(trip);
+vacation.addItem(shopping);
+vacation.addItem(goBackHome);
 
 displayProject(vacation);
+displayItem(vacation.trip);
+displayItem(vacation.shopping);
+displayItem(vacation.goBackHome);

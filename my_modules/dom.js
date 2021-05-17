@@ -1,7 +1,11 @@
+import {
+    toCamelCase
+} from "../my_modules/string_functions"
+
+const content = document.querySelector(".content");
 
 function displayItem(item) {
-    const content = document.querySelector(".content");
-    const itemContainer = document.createElement("button");
+    const itemContainer = document.createElement("div");
     const propList = document.createElement("ul");
 
     for (let prop in item) {
@@ -14,8 +18,14 @@ function displayItem(item) {
 
     }
 
+    itemContainer.id = toCamelCase(item.title);
     itemContainer.appendChild(propList);
-    content.appendChild(propList);
+    content.appendChild(itemContainer);
+}
+
+function removeItem(itemId) {
+    const itemContainer = itemId;
+    content.removeChild(itemContainer);
 }
 
 function displayProject(project) {
@@ -26,4 +36,4 @@ function displayProject(project) {
     sidebar.appendChild(projectButt);
 }
 
-export { displayItem, displayProject };
+export { displayItem, displayProject, removeItem };
