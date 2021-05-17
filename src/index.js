@@ -5,6 +5,7 @@ import {
 
 import {
    displayItem,
+   displayAllItems,
    displayProject
 } from "../my_modules/dom.js"; 
 
@@ -32,12 +33,3 @@ vacation.addItem(shopping);
 vacation.addItem(goBackHome);
 
 displayProject(vacation);
-
-const projects = document.querySelectorAll(".sidebar");
-
-projects.forEach(project => {
-    project.addEventListener("click", (e) => {
-        console.log(e.target.id);
-        displayItem(vacation.bigYoshi);
-    });
-});

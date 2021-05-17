@@ -32,6 +32,10 @@ header h1 {
     background-color: #CCCCCC;
 }
 
+#add-project {
+    order: 300;
+}
+
 project-buttons {
     border-style: none;
 }
