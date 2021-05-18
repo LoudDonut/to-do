@@ -4,8 +4,13 @@ import {
 } from "../my_modules/item.js";
 
 import {
+    toCamelCase
+} from "../my_modules/string_functions";
+
+import {
    displayItem,
    displayAllItems,
+   dropForm,
    displayProject
 } from "../my_modules/dom.js"; 
 
@@ -31,5 +36,23 @@ const goBackHome = createItem(
 vacation.addItem(trip);
 vacation.addItem(shopping);
 vacation.addItem(goBackHome);
+
+let allProjects = []; //for storage, maybe save when page closes?
+allProjects.push(vacation);
+
+let submitButt; //listeners for the addButt and everything inside
+const addProject = document.querySelector("#add-project");
+addProject.addEventListener("click", (e) => {
+    submitButt = dropForm();
+    
+    submitButt.addEventListener("click", (e) => {
+        const name = toCamelCase(e.target.previousSibling.value);
+        const newProject = createProject(name);
+        allProjects.push(newProject);
+        console.log(allProjects);
+    });
+
+});
+
 
 displayProject(vacation);

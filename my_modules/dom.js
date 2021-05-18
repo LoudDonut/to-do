@@ -2,7 +2,13 @@ import {
     toCamelCase
 } from "../my_modules/string_functions";
 
+import {
+    createItem, //arg: title, desc, dueDate, priority
+    createProject //arg: item
+} from "../my_modules/item.js";
+
 const content = document.querySelector(".content");
+const sidebar = document.querySelector(".sidebar");
 
 function displayItem(item) {
     const itemContainer = document.createElement("div");
@@ -19,6 +25,7 @@ function displayItem(item) {
     }
 
     itemContainer.id = toCamelCase(item.title);
+    itemContainer.classList.add("item-container");
     itemContainer.appendChild(propList);
     content.appendChild(itemContainer);
 }
@@ -48,7 +55,6 @@ function removeAllItems(project) {
 }
 
 function displayProject(project) {
-    const sidebar = document.querySelector(".sidebar");
     const projectButt = document.createElement("button");
     projectButt.id = toCamelCase(project.title);
     
@@ -67,9 +73,26 @@ function displayProject(project) {
     });
 }
 
+function dropForm() {
+    const form = document.createElement("form");
+    const input = document.createElement("input");
+    const submit = document.createElement("input");
+    input.setAttribute("type", "text");
+    submit.setAttribute("type", "submit");
+    submit.setAttribute("value", "Submit");
+    form.setAttribute("action", "javascript:void(0);");
+
+    form.appendChild(input);
+    form.appendChild(submit);
+    sidebar.appendChild(form);
+
+    return submit;
+}
+
 export {
     displayItem,
     displayAllItems,
     displayProject,
-    removeItem
+    removeItem,
+    dropForm
 };
