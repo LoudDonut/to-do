@@ -11,6 +11,7 @@ import {
    displayItem,
    displayAllItems,
    dropForm,
+   unDropForm,
    displayProject
 } from "../my_modules/dom.js"; 
 
@@ -40,16 +41,17 @@ vacation.addItem(goBackHome);
 let allProjects = []; //for storage, maybe save when page closes?
 allProjects.push(vacation);
 
-let submitButt; //listeners for the addButt and everything inside
+let submitButt;
 const addProject = document.querySelector("#add-project");
 addProject.addEventListener("click", (e) => {
-    submitButt = dropForm();
+    const dropSelectors = dropForm();
     
-    submitButt.addEventListener("click", (e) => {
+    dropSelectors.submit.addEventListener("click", (e) => {
         const name = toCamelCase(e.target.previousSibling.value);
         const newProject = createProject(name);
         allProjects.push(newProject);
-        console.log(allProjects);
+        displayProject(newProject);
+        unDropForm(dropSelectors.form);
     });
 
 });

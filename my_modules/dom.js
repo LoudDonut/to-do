@@ -1,5 +1,5 @@
 import {
-    toCamelCase
+    toCamelCase as title, toCamelCase
 } from "../my_modules/string_functions";
 
 import {
@@ -13,21 +13,40 @@ const sidebar = document.querySelector(".sidebar");
 function displayItem(item) {
     const itemContainer = document.createElement("div");
     const propList = document.createElement("ul");
+    const edit = document.createElement("button");
+    const remove = document.createElement("button");
+    const title = toCamelCase(item.title);
 
     for (let prop in item) {
 
         if (item.propertyIsEnumerable(prop) === true) {
             const itemProp = document.createElement("li");
+            itemProp.classList.add(title);
             itemProp.textContent = item[prop];
             propList.appendChild(itemProp);
         }
 
     }
 
-    itemContainer.id = toCamelCase(item.title);
+    itemContainer.id = title;
     itemContainer.classList.add("item-container");
     itemContainer.appendChild(propList);
+    edit.textContent = "Edit";
+    edit.classList.add(title);
+    remove.textContent = "Remove";
+    remove.classList.add(title);
+    itemContainer.appendChild(edit);
+    itemContainer.appendChild(remove);
     content.appendChild(itemContainer);
+
+    edit.addEventListener("click", (e) => {
+        content.removeChild(itemContainer);
+    });
+
+    remove.addEventListener("click", (e) => {
+        content.removeChild(itemContainer);
+        
+    });
 }
 
 function displayAllItems(project) {
@@ -48,7 +67,7 @@ function removeAllItems(project) {
     for (let key in project) {
         if (key !== "title" &&
         project.propertyIsEnumerable(key) === true) {
-            const curr = toCamelCase(project[key].title);
+            const curr = title(project[key].title);
             removeItem(curr);
         }
     }
@@ -56,7 +75,7 @@ function removeAllItems(project) {
 
 function displayProject(project) {
     const projectButt = document.createElement("button");
-    projectButt.id = toCamelCase(project.title);
+    projectButt.id = title(project.title);
     
     projectButt.textContent = project.title;
     sidebar.appendChild(projectButt);
@@ -86,7 +105,11 @@ function dropForm() {
     form.appendChild(submit);
     sidebar.appendChild(form);
 
-    return submit;
+    return { submit, form };
+}
+
+function unDropForm(formSelector) {
+    sidebar.removeChild(formSelector);
 }
 
 export {
@@ -94,5 +117,6 @@ export {
     displayAllItems,
     displayProject,
     removeItem,
-    dropForm
+    dropForm,
+    unDropForm
 };
