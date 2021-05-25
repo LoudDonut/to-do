@@ -38,15 +38,6 @@ function displayItem(item) {
     itemContainer.appendChild(edit);
     itemContainer.appendChild(remove);
     content.appendChild(itemContainer);
-
-    edit.addEventListener("click", (e) => {
-        content.removeChild(itemContainer);
-    });
-
-    remove.addEventListener("click", (e) => {
-        content.removeChild(itemContainer);
-        
-    });
 }
 
 function displayAllItems(project) {
@@ -81,18 +72,9 @@ function displayProject(project) {
     sidebar.appendChild(projectButt);
 
     let prevClicked;
-    projectButt.addEventListener("click", (e) => {
-        if (prevClicked !== e.target.id) {
-            displayAllItems(project);
-            prevClicked = e.target.id;
-        } else {
-            removeAllItems(project);
-            prevClicked = undefined;
-        }
-    });
 }
 
-function dropForm() {
+function dropForm(mode, className) {
     const form = document.createElement("form");
     const input = document.createElement("input");
     const submit = document.createElement("input");
@@ -100,10 +82,11 @@ function dropForm() {
     submit.setAttribute("type", "submit");
     submit.setAttribute("value", "Submit");
     form.setAttribute("action", "javascript:void(0);");
-
+    
     form.appendChild(input);
     form.appendChild(submit);
-    sidebar.appendChild(form);
+
+    sidebar.appendChild(form)
 
     return { submit, form };
 }

@@ -38,8 +38,8 @@ vacation.addItem(trip);
 vacation.addItem(shopping);
 vacation.addItem(goBackHome);
 
-let allProjects = []; //for storage, maybe save when page closes?
-allProjects.push(vacation);
+let allProjects = {}; //for storage, maybe save when page closes?
+allProjects.vacation = vacation;
 
 let submitButt;
 const addProject = document.querySelector("#add-project");
@@ -48,13 +48,16 @@ addProject.addEventListener("click", (e) => {
     
     dropSelectors.submit.addEventListener("click", (e) => {
         const name = toCamelCase(e.target.previousSibling.value);
-        const newProject = createProject(name);
-        allProjects.push(newProject);
-        displayProject(newProject);
-        unDropForm(dropSelectors.form);
+        if (!(name === "")) {
+            const newProject = createProject(name);
+            allProjects[newProject] = newProject;
+            displayProject(newProject);
+            unDropForm(dropSelectors.form);
+        } else {
+            unDropForm();
+        }
     });
 
 });
-
 
 displayProject(vacation);
