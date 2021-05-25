@@ -67,11 +67,10 @@ function removeAllItems(project) {
 function displayProject(project) {
     const projectButt = document.createElement("button");
     projectButt.id = title(project.title);
+    projectButt.classList.add("projectButtons");
     
     projectButt.textContent = project.title;
     sidebar.appendChild(projectButt);
-
-    let prevClicked;
 }
 
 function dropForm(mode, className) {
@@ -98,6 +97,7 @@ function unDropForm(formSelector) {
 export {
     displayItem,
     displayAllItems,
+    removeAllItems,
     displayProject,
     removeItem,
     dropForm,

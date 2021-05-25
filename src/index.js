@@ -10,6 +10,7 @@ import {
 import {
    displayItem,
    displayAllItems,
+   removeAllItems,
    dropForm,
    unDropForm,
    displayProject
@@ -41,6 +42,23 @@ vacation.addItem(goBackHome);
 let allProjects = {}; //for storage, maybe save when page closes?
 allProjects.vacation = vacation;
 
+displayProject(vacation);
+
+let clickStatus = {};
+const projectButtons = document.querySelectorAll(".projectButtons");
+projectButtons.forEach(project => {
+    project.addEventListener("click", (e) => {
+        if (clickStatus[e.target.id] === undefined ||
+        clickStatus[e.target.id] === "display") {
+            displayAllItems(allProjects[e.target.id]);
+            clickStatus[e.target.id] = "remove";
+        } else {
+            removeAllItems(allProjects[e.target.id]);
+            clickStatus[e.target.id] = "display";
+        }
+    });
+});
+
 let submitButt;
 const addProject = document.querySelector("#add-project");
 addProject.addEventListener("click", (e) => {
@@ -59,5 +77,3 @@ addProject.addEventListener("click", (e) => {
     });
 
 });
-
-displayProject(vacation);
