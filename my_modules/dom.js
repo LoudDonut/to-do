@@ -32,9 +32,9 @@ function displayItem(item) {
     itemContainer.classList.add("item-container");
     itemContainer.appendChild(propList);
     edit.textContent = "Edit";
-    edit.classList.add(title);
+    edit.classList.add("editButtons");
     remove.textContent = "Remove";
-    remove.classList.add(title);
+    remove.classList.add("removeButtons");
     itemContainer.appendChild(edit);
     itemContainer.appendChild(remove);
     content.appendChild(itemContainer);
@@ -81,11 +81,15 @@ function dropForm(mode, className) {
     submit.setAttribute("type", "submit");
     submit.setAttribute("value", "Submit");
     form.setAttribute("action", "javascript:void(0);");
-    
-    form.appendChild(input);
-    form.appendChild(submit);
 
-    sidebar.appendChild(form)
+    if (mode === "edit") {
+        //continue here
+    } else {
+        form.appendChild(input);
+        form.appendChild(submit);
+        sidebar.appendChild(form)
+    }
+    
 
     return { submit, form };
 }

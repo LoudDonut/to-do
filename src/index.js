@@ -10,6 +10,7 @@ import {
 import {
    displayItem,
    displayAllItems,
+   removeItem,
    removeAllItems,
    dropForm,
    unDropForm,
@@ -52,6 +53,23 @@ projectButtons.forEach(project => {
         clickStatus[e.target.id] === "display") {
             displayAllItems(allProjects[e.target.id]);
             clickStatus[e.target.id] = "remove";
+
+            const editButtons = document.querySelectorAll(".editButtons");
+            editButtons.forEach(button => {
+                button.addEventListener("click", (e) => {
+                    const currentItem = e.target.parentNode.id;
+                    dropForm("edit");
+                });
+            }); 
+
+            const removeButtons = document.querySelectorAll(".removeButtons");
+            removeButtons.forEach(button => {
+                button.addEventListener("click", (e) => {
+                    const currentItem = e.target.parentNode.id
+                    removeItem(currentItem);
+                });
+            });
+
         } else {
             removeAllItems(allProjects[e.target.id]);
             clickStatus[e.target.id] = "display";
