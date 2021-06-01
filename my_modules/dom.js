@@ -7,6 +7,11 @@ import {
     createProject //arg: item
 } from "../my_modules/item.js";
 
+import {
+    getAllProjects,
+    getItem
+} from "../src/index";
+
 const content = document.querySelector(".content");
 const sidebar = document.querySelector(".sidebar");
 
@@ -73,7 +78,7 @@ function displayProject(project) {
     sidebar.appendChild(projectButt);
 }
 
-function dropForm(mode, className) {
+function dropForm() {
     const form = document.createElement("form");
     const input = document.createElement("input");
     const submit = document.createElement("input");
@@ -81,21 +86,42 @@ function dropForm(mode, className) {
     submit.setAttribute("type", "submit");
     submit.setAttribute("value", "Submit");
     form.setAttribute("action", "javascript:void(0);");
-
-    if (mode === "edit") {
-        //continue here
-    } else {
-        form.appendChild(input);
-        form.appendChild(submit);
-        sidebar.appendChild(form)
-    }
+    form.appendChild(input);
+    form.appendChild(submit);
+    sidebar.appendChild(form)
     
 
     return { submit, form };
 }
 
+function editMenu(item) {
+    const className = "." + item;
+    const itemContainer = document.querySelectorAll(className);
+    const form = document.createElement("form");
+    form.id = item + "Edit";
+    form.classList.add("edit-form");
+    itemContainer.forEach(prop => {
+        const editBar = document.createElement("input");
+        editBar.classList.add("edit-bar");
+        editBar.setAttribute("value", prop.textContent)
+        form.appendChild(editBar);
+    });
+    const submit = document.createElement("input");
+    submit.setAttribute("type", "submit");
+    submit.setAttribute("value", "Submit");
+    submit.classList.add("submit-item-edit");
+    form.setAttribute("action", "javascript:void(0);");
+    form.appendChild(submit);
+    content.appendChild(form);
+}
+
 function unDropForm(formSelector) {
     sidebar.removeChild(formSelector);
+}
+
+function remEditMenu(editMenuId) {
+    const editMenu = document.querySelector(editMenuId);
+    content.removeChild(editMenu);
 }
 
 export {
@@ -105,5 +131,7 @@ export {
     displayProject,
     removeItem,
     dropForm,
-    unDropForm
+    unDropForm,
+    editMenu,
+    remEditMenu
 };

@@ -25,6 +25,11 @@ header h1 {
     margin-top: 20px;
 }
 
+.edit-form {
+    display: flex;
+    flex-direction: column;
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -35,10 +40,6 @@ header h1 {
 
 #add-project {
     order: 300;
-}
-
-project-buttons {
-    border-style: none;
 }
 
 footer {
