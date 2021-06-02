@@ -52,60 +52,72 @@ function getItem(projectName, itemName) {
     return allProjects[projectName][itemName];
 }
 
-allProjects.vacation = vacation;
-displayProject(vacation);
+function listenEditSubmit(currProj) {
+    const subbutt = document.querySelectorAll(".submit-item-edit");
+            subbutt.forEach(button => {
+                button.addEventListener("click", (e) => {
+                const currItem = e.target.parentNode.id;
+                const form = document.querySelector("#" + currItem);
+                const newItem = createItem(
+                    form[0].value,
+                    form[1].value,
+                    form[2].value,
+                    form[3].value
+                );
+                allProjects[currProj].addItem(newItem);
+                displayItem(newItem);
+                remEditMenu("#" + currItem);
+                });
+            });
+}
 
-let clickStatus = {};
-const projectButtons = document.querySelectorAll(".projectButtons");
-projectButtons.forEach(project => {
+function listenEdit(currProj) {
+    const editButtons = document.querySelectorAll(".editButtons");
+    editButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            const currentItem = e.target.parentNode.id;
+            editMenu(currentItem);
+            removeItem(currentItem);
+            delete allProjects[currProj][currentItem];
+
+            listenEditSubmit(currProj);
+        });
+    }); 
+    
+    const removeButtons = document.querySelectorAll(".removeButtons");
+    removeButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            const currentItem = e.target.parentNode.id
+            removeItem(currentItem);
+        });
+    });
+}
+
+function listenProject() {
+    let clickStatus = {};
+    const projectButtons = document.querySelectorAll(".projectButtons");
+    projectButtons.forEach(project => {
     project.addEventListener("click", (e) => {
         const currProj = e.target.id;
         if (clickStatus[e.target.id] === undefined ||
         clickStatus[e.target.id] === "display") {
             displayAllItems(allProjects[e.target.id]);
             clickStatus[e.target.id] = "remove";
-
-            const editButtons = document.querySelectorAll(".editButtons");
-            editButtons.forEach(button => {
-                button.addEventListener("click", (e) => {
-                    const currentItem = e.target.parentNode.id;
-                    editMenu(currentItem);
-                    removeItem(currentItem);
-                    delete allProjects[currProj][currentItem];
-
-                    const subbutt = document.querySelectorAll(".submit-item-edit");
-                    subbutt.forEach(button => {
-                        button.addEventListener("click", (e) => {
-                        const currItem = e.target.parentNode.id;
-                        const form = document.querySelector("#" + currItem);
-                        const newItem = createItem(
-                            form[0].value,
-                            form[1].value,
-                            form[2].value,
-                            form[3].value
-                        );
-                        allProjects[currProj][form[0].value] = newItem;
-                        displayItem(allProjects[currProj][form[0].value] = newItem);
-                        remEditMenu("#" + currItem);
-                        });
-                    });
-                });
-            }); 
-
-            const removeButtons = document.querySelectorAll(".removeButtons");
-            removeButtons.forEach(button => {
-                button.addEventListener("click", (e) => {
-                    const currentItem = e.target.parentNode.id
-                    removeItem(currentItem);
-                });
-            });
-
+            
+            listenEdit(currProj);
+    
         } else {
             removeAllItems(allProjects[e.target.id]);
             clickStatus[e.target.id] = "display";
         }
     });
-});
+    });
+}
+
+allProjects.vacation = vacation;
+displayProject(vacation);
+
+listenProject();
 
 const addProject = document.querySelector("#add-project");
 addProject.addEventListener("click", (e) => {
