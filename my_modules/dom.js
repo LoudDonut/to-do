@@ -38,8 +38,10 @@ function displayItem(item) {
     itemContainer.appendChild(propList);
     edit.textContent = "Edit";
     edit.classList.add("editButtons");
+    edit.id = title + "Edit";
     remove.textContent = "Remove";
     remove.classList.add("removeButtons");
+    remove.id = title + "Remove";
     itemContainer.appendChild(edit);
     itemContainer.appendChild(remove);
     content.appendChild(itemContainer);
@@ -56,7 +58,7 @@ function displayAllItems(project) {
 
 function removeItem(itemId) {
     const itemContainer = document.querySelector("#" + itemId);
-    content.removeChild(itemContainer);
+    if (itemContainer !== null) content.removeChild(itemContainer);
 }
 
 function removeAllItems(project) {
@@ -76,6 +78,13 @@ function displayProject(project) {
     
     projectButt.textContent = project.title;
     sidebar.appendChild(projectButt);
+}
+
+function displayAllProjects(allProjects) {
+    console.log(allProjects);
+    for (let project in allProjects) {
+        displayProject(allProjects[project]);
+    }
 }
 
 function dropForm() {
@@ -129,6 +138,7 @@ export {
     displayAllItems,
     removeAllItems,
     displayProject,
+    displayAllProjects,
     removeItem,
     dropForm,
     unDropForm,

@@ -16,7 +16,8 @@ import {
    unDropForm,
    editMenu,
    remEditMenu,
-   displayProject
+   displayProject,
+   displayAllProjects
 } from "../my_modules/dom.js";
 
 const vacation = createProject("vacation");
@@ -54,21 +55,44 @@ function getItem(projectName, itemName) {
 
 function listenEditSubmit(currProj) {
     const subbutt = document.querySelectorAll(".submit-item-edit");
-            subbutt.forEach(button => {
-                button.addEventListener("click", (e) => {
-                const currItem = e.target.parentNode.id;
-                const form = document.querySelector("#" + currItem);
-                const newItem = createItem(
-                    form[0].value,
-                    form[1].value,
-                    form[2].value,
-                    form[3].value
-                );
-                allProjects[currProj].addItem(newItem);
-                displayItem(newItem);
-                remEditMenu("#" + currItem);
-                });
+    subbutt.forEach(button => {
+        button.addEventListener("click", (e) => {
+            const currItem = e.target.parentNode.id;
+            const form = document.querySelector("#" + currItem);
+            const newItem = createItem(
+                form[0].value,
+                form[1].value,
+                form[2].value,
+                form[3].value
+            );
+            allProjects[currProj].addItem(newItem);
+            displayItem(newItem);
+            remEditMenu("#" + currItem);
+
+            const itemTitle = toCamelCase(newItem.title);
+            const editButt = document.querySelector(
+                "#" + itemTitle + "Edit");
+            const removeButt = document.querySelector(
+                "#" + itemTitle + "Remove"
+            );
+
+            editButt.addEventListener("click", (e) => {
+                const currentItem = e.target.parentNode.id;
+                editMenu(currentItem);
+                removeItem(currentItem);
+                delete allProjects[currProj][currentItem];
+    
+                listenEditSubmit(currProj);
             });
+
+            removeButt.addEventListener("click", (e) => {
+                const currentItem = e.target.parentNode.id
+                delete allProjects[currProj][currentItem];
+                removeItem(currentItem);
+            });
+
+        });
+    });
 }
 
 function listenEdit(currProj) {
@@ -89,6 +113,7 @@ function listenEdit(currProj) {
         button.addEventListener("click", (e) => {
             const currentItem = e.target.parentNode.id
             removeItem(currentItem);
+            delete allProjects[currProj][currentItem];
         });
     });
 }
@@ -115,7 +140,7 @@ function listenProject() {
 }
 
 allProjects.vacation = vacation;
-displayProject(vacation);
+displayAllProjects(allProjects);
 
 listenProject();
 
