@@ -42,8 +42,16 @@ const goBackHome = createItem(
 vacation.addItem(trip);
 vacation.addItem(shopping);
 vacation.addItem(goBackHome);
+//localStorage.clear();
+console.log(Object.entries(localStorage).length === 0);
+if (Object.entries(localStorage).length === 0) {
+    var allProjects = {};
+} else {
+    var allProjects = localStorage.getItem('allProjects');
 
-let allProjects = {}; //for storage, maybe save when page closes?
+    console.log('retrievedObject: ', JSON.parse(allProjects));
+    allProjects = JSON.parse(allProjects);
+}
 
 function getAllProjects() {
     return allProjects;
@@ -139,7 +147,12 @@ function listenProject() {
     });
 }
 
-allProjects.vacation = vacation;
+function savePage() {
+    localStorage.setItem('allProjects', JSON.stringify(allProjects));
+}
+
+window.addEventListener('unload', savePage);
+
 displayAllProjects(allProjects);
 
 listenProject();
@@ -161,5 +174,6 @@ addProject.addEventListener("click", (e) => {
     });
 
 });
+
 
 export { getAllProjects, getItem };

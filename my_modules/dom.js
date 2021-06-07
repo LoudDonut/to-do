@@ -81,7 +81,6 @@ function displayProject(project) {
 }
 
 function displayAllProjects(allProjects) {
-    console.log(allProjects);
     for (let project in allProjects) {
         displayProject(allProjects[project]);
     }
