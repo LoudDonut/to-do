@@ -42,7 +42,9 @@ const goBackHome = createItem(
 vacation.addItem(trip);
 vacation.addItem(shopping);
 vacation.addItem(goBackHome);
-//localStorage.clear();
+
+//localStorage.clear(); //for testing
+
 console.log(Object.entries(localStorage).length === 0);
 if (Object.entries(localStorage).length === 0) {
     var allProjects = {};
@@ -52,6 +54,8 @@ if (Object.entries(localStorage).length === 0) {
     console.log('retrievedObject: ', JSON.parse(allProjects));
     allProjects = JSON.parse(allProjects);
 }
+
+//allProjects.vacation = vacation; //for testing
 
 function getAllProjects() {
     return allProjects;
@@ -73,11 +77,11 @@ function listenEditSubmit(currProj) {
                 form[2].value,
                 form[3].value
             );
-            allProjects[currProj].addItem(newItem);
+            const itemTitle = toCamelCase(newItem.title);
+            allProjects[currProj][itemTitle] = newItem;
             displayItem(newItem);
             remEditMenu("#" + currItem);
 
-            const itemTitle = toCamelCase(newItem.title);
             const editButt = document.querySelector(
                 "#" + itemTitle + "Edit");
             const removeButt = document.querySelector(
