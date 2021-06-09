@@ -130,23 +130,32 @@ function listenEdit(currProj) {
     });
 }
 
+function listenAddItem() {
+    editMenu(templateItem); //Continue here <<<<<<<<<<<<<<<<<<<<<<<<<<<
+}
+
+let clickStatusDropItems = {};
+function dropItems(e) {
+    const currProj = e.target.id;
+    if (clickStatusDropItems[e.target.id] === undefined ||
+    clickStatusDropItems[e.target.id] === "display") {
+        displayAllItems(allProjects[e.target.id]);
+        clickStatusDropItems[e.target.id] = "remove";
+        
+        listenEdit(currProj);
+    
+    } else {
+        removeAllItems(allProjects[e.target.id]);
+        clickStatusDropItems[e.target.id] = "display";
+    }
+}
+
 function listenProject() {
     let clickStatus = {};
     const projectButtons = document.querySelectorAll(".projectButtons");
     projectButtons.forEach(project => {
     project.addEventListener("click", (e) => {
-        const currProj = e.target.id;
-        if (clickStatus[e.target.id] === undefined ||
-        clickStatus[e.target.id] === "display") {
-            displayAllItems(allProjects[e.target.id]);
-            clickStatus[e.target.id] = "remove";
-            
-            listenEdit(currProj);
-    
-        } else {
-            removeAllItems(allProjects[e.target.id]);
-            clickStatus[e.target.id] = "display";
-        }
+        dropItems(e);
     });
     });
 }
@@ -167,11 +176,20 @@ addProject.addEventListener("click", (e) => {
     
     dropSelectors.submit.addEventListener("click", (e) => {
         const name = toCamelCase(e.target.previousSibling.value);
-        if (!(name === "")) {
+        if (name === "") {
+            unDropForm(dropSelectors.form);
+        } else if (!(name === "")) {
             const newProject = createProject(name);
-            allProjects[newProject] = newProject;
+
+            allProjects[newProject.title] = newProject;
             displayProject(newProject);
             unDropForm(dropSelectors.form);
+            
+            const projectButton = document.querySelector('#' + newProject.title);
+            projectButton.addEventListener('click', (e) => {
+                dropItems(e);
+            });
+
         } else {
             unDropForm();
         }

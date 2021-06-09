@@ -1,5 +1,5 @@
 import {
-    toCamelCase as title, toCamelCase
+    toCamelCase
 } from "../my_modules/string_functions";
 
 import {
@@ -36,12 +36,15 @@ function displayItem(item) {
     itemContainer.id = title;
     itemContainer.classList.add("item-container");
     itemContainer.appendChild(propList);
+
     edit.textContent = "Edit";
     edit.classList.add("editButtons");
     edit.id = title + "Edit";
+
     remove.textContent = "Remove";
     remove.classList.add("removeButtons");
     remove.id = title + "Remove";
+
     itemContainer.appendChild(edit);
     itemContainer.appendChild(remove);
     content.appendChild(itemContainer);
@@ -54,6 +57,12 @@ function displayAllItems(project) {
             displayItem(project[key]);
         }
     }
+    
+    const add = document.createElement("button");
+    add.textContent = 'Add';
+    add.classList.add('addButton');
+    add.id = project.title + "Add";
+    content.appendChild(add);
 }
 
 function removeItem(itemId) {
@@ -62,10 +71,13 @@ function removeItem(itemId) {
 }
 
 function removeAllItems(project) {
+    const add = document.querySelector("#" + project.title + "Add");
+    content.removeChild(add);
+
     for (let key in project) {
         if (key !== "title" &&
         project.propertyIsEnumerable(key) === true) {
-            const curr = title(project[key].title);
+            const curr = toCamelCase(project[key].title);
             removeItem(curr);
         }
     }
@@ -73,7 +85,7 @@ function removeAllItems(project) {
 
 function displayProject(project) {
     const projectButt = document.createElement("button");
-    projectButt.id = title(project.title);
+    projectButt.id = project.title;
     projectButt.classList.add("projectButtons");
     
     projectButt.textContent = project.title;
