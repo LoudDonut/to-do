@@ -13,6 +13,7 @@ import {
    removeItem,
    removeAllItems,
    dropForm,
+   addToProjectForm,
    unDropForm,
    editMenu,
    remEditMenu,
@@ -130,8 +131,17 @@ function listenEdit(currProj) {
     });
 }
 
-function listenAddItem() {
-    editMenu(templateItem); //Continue here <<<<<<<<<<<<<<<<<<<<<<<<<<<
+function listenAddItem(projectName) {
+    const addButton = document.querySelector('#' + projectName + 'Add');
+    addButton.addEventListener("click", (e) => {
+        const emptyItem = createItem(
+            "okay",
+            "okay",
+            "okay",
+            "okay"
+        );
+        addToProjectForm();
+    });
 }
 
 let clickStatusDropItems = {};
@@ -141,8 +151,9 @@ function dropItems(e) {
     clickStatusDropItems[e.target.id] === "display") {
         displayAllItems(allProjects[e.target.id]);
         clickStatusDropItems[e.target.id] = "remove";
-        
+
         listenEdit(currProj);
+        listenAddItem(currProj);
     
     } else {
         removeAllItems(allProjects[e.target.id]);
@@ -151,12 +162,11 @@ function dropItems(e) {
 }
 
 function listenProject() {
-    let clickStatus = {};
     const projectButtons = document.querySelectorAll(".projectButtons");
     projectButtons.forEach(project => {
-    project.addEventListener("click", (e) => {
-        dropItems(e);
-    });
+        project.addEventListener("click", (e) => {
+            dropItems(e);
+        });
     });
 }
 

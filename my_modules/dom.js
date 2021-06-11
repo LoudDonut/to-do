@@ -51,6 +51,9 @@ function displayItem(item) {
 }
 
 function displayAllItems(project) {
+    //const projectItemContainer = document.createElement("div");
+    //projectItemContainer.id = project.title + 'Container';
+    
     for (let key in project) {
         if (key !== "title" &&
         project.propertyIsEnumerable(key) === true) {
@@ -114,11 +117,11 @@ function dropForm() {
     return { submit, form };
 }
 
-function editMenu(item) {
-    const className = "." + item;
+function editMenu(itemName) {
+    const className = "." + itemName;
     const itemContainer = document.querySelectorAll(className);
     const form = document.createElement("form");
-    form.id = item + "Edit";
+    form.id = itemName + "Edit";
     form.classList.add("edit-form");
     itemContainer.forEach(prop => {
         const editBar = document.createElement("input");
@@ -126,6 +129,39 @@ function editMenu(item) {
         editBar.setAttribute("value", prop.textContent)
         form.appendChild(editBar);
     });
+    const submit = document.createElement("input");
+    submit.setAttribute("type", "submit");
+    submit.setAttribute("value", "Submit");
+    submit.classList.add("submit-item-edit");
+    form.setAttribute("action", "javascript:void(0);");
+    form.appendChild(submit);
+    content.appendChild(form);
+}
+
+function addToProjectForm() {
+    const form = document.createElement("form");
+    form.classList.add("edit-form");
+    for (let i = 0; i < 4; i++) {
+        const input = document.createElement("input");
+        input.classList.add('newItemInputs');
+
+        switch (i) {
+            case 0:
+                input.setAttribute('value', 'Title');
+                break;
+            case 1:
+                input.setAttribute('value', 'Description');
+                break;
+            case 2:
+                input.setAttribute('value', 'Date');
+                break;
+            case 3:
+                input.setAttribute('value', 'Priority');
+                break;
+        }
+
+        form.appendChild(input);
+    }
     const submit = document.createElement("input");
     submit.setAttribute("type", "submit");
     submit.setAttribute("value", "Submit");
@@ -152,6 +188,7 @@ export {
     displayAllProjects,
     removeItem,
     dropForm,
+    addToProjectForm,
     unDropForm,
     editMenu,
     remEditMenu
