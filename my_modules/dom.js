@@ -175,8 +175,8 @@ function unDropForm(formSelector) {
     sidebar.removeChild(formSelector);
 }
 
-function remEditMenu(editMenuId) {
-    const editMenu = document.querySelector(editMenuId);
+function remEditMenu(editMenuClass) {
+    const editMenu = document.querySelector(editMenuClass);
     content.removeChild(editMenu);
 }
 

@@ -71,7 +71,7 @@ function listenEditSubmit(currProj) {
     subbutt.forEach(button => {
         button.addEventListener("click", (e) => {
             const currItem = e.target.parentNode.id;
-            const form = document.querySelector("#" + currItem);
+            const form = document.querySelector(".edit-form");
             const newItem = createItem(
                 form[0].value,
                 form[1].value,
@@ -81,7 +81,7 @@ function listenEditSubmit(currProj) {
             const itemTitle = toCamelCase(newItem.title);
             allProjects[currProj][itemTitle] = newItem;
             displayItem(newItem);
-            remEditMenu("#" + currItem);
+            remEditMenu(".edit-form");
 
             const editButt = document.querySelector(
                 "#" + itemTitle + "Edit");
@@ -141,6 +141,7 @@ function listenAddItem(projectName) {
             "okay"
         );
         addToProjectForm();
+        listenEditSubmit(projectName); // <<<<<<< CONTINUE HERE
     });
 }
 
