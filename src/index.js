@@ -46,13 +46,10 @@ vacation.addItem(goBackHome);
 
 //localStorage.clear(); //for testing
 
-console.log(Object.entries(localStorage).length === 0);
 if (Object.entries(localStorage).length === 0) {
     var allProjects = {};
 } else {
     var allProjects = localStorage.getItem('allProjects');
-
-    console.log('retrievedObject: ', JSON.parse(allProjects));
     allProjects = JSON.parse(allProjects);
 }
 
@@ -70,40 +67,43 @@ function listenEditSubmit(currProj) {
     const subbutt = document.querySelectorAll(".submit-item-edit");
     subbutt.forEach(button => {
         button.addEventListener("click", (e) => {
-            const currItem = e.target.parentNode.id;
             const form = document.querySelector(".edit-form");
-            const newItem = createItem(
-                form[0].value,
-                form[1].value,
-                form[2].value,
-                form[3].value
-            );
-            const itemTitle = toCamelCase(newItem.title);
-            allProjects[currProj][itemTitle] = newItem;
-            displayItem(newItem);
-            remEditMenu(".edit-form");
-
-            const editButt = document.querySelector(
-                "#" + itemTitle + "Edit");
-            const removeButt = document.querySelector(
-                "#" + itemTitle + "Remove"
-            );
-
-            editButt.addEventListener("click", (e) => {
-                const currentItem = e.target.parentNode.id;
-                editMenu(currentItem);
-                removeItem(currentItem);
-                delete allProjects[currProj][currentItem];
+            if (form[0].value === 'Title') {
+                remEditMenu(".edit-form");
+            } else {
+                const newItem = createItem(
+                    form[0].value,
+                    form[1].value,
+                    form[2].value,
+                    form[3].value
+                );
+                const itemTitle = toCamelCase(newItem.title);
+                console.log(itemTitle);
+                allProjects[currProj][itemTitle] = newItem;
+                displayItem(newItem);
+                remEditMenu(".edit-form");
     
-                listenEditSubmit(currProj);
-            });
-
-            removeButt.addEventListener("click", (e) => {
-                const currentItem = e.target.parentNode.id
-                delete allProjects[currProj][currentItem];
-                removeItem(currentItem);
-            });
-
+                const editButt = document.querySelector(
+                    "#" + itemTitle + "Edit");
+                const removeButt = document.querySelector(
+                    "#" + itemTitle + "Remove"
+                );
+    
+                editButt.addEventListener("click", (e) => {
+                    const currentItem = e.target.parentNode.id;
+                    editMenu(currentItem);
+                    removeItem(currentItem);
+                    delete allProjects[currProj][currentItem];
+        
+                    listenEditSubmit(currProj);
+                });
+    
+                removeButt.addEventListener("click", (e) => {
+                    const currentItem = e.target.parentNode.id
+                    delete allProjects[currProj][currentItem];
+                    removeItem(currentItem);
+                });
+            }
         });
     });
 }
@@ -141,7 +141,7 @@ function listenAddItem(projectName) {
             "okay"
         );
         addToProjectForm();
-        listenEditSubmit(projectName); // <<<<<<< CONTINUE HERE
+        listenEditSubmit(projectName);
     });
 }
 
