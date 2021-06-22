@@ -68,7 +68,7 @@ function listenEditRemove(currProj, itemTitle) {
         dom.removeItem(currentItem);
         delete allProjects[currProj][currentItem];
 
-        listenAllWhenProject(currProj);
+        listenAllWhenProject(currProj, 'edit');
     });
 
     removeButt.addEventListener("click", (e) => {
@@ -78,40 +78,15 @@ function listenEditRemove(currProj, itemTitle) {
     });
 }
 
-function listenSubmitItem(currProj) {
-    const subbutt = document.querySelectorAll(".addButton");
-    subbutt.forEach(button => {
-        button.addEventListener("click", () => {
-            const form = document.querySelector(".edit-form");
-            if (form[0].value === 'Title') {
-                dom.remEditMenu(".edit-form");
-            } else {
-                const newItem = createItem(
-                    form[0].value,
-                    form[1].value,
-                    form[2].value,
-                    form[3].value
-                );
-                const itemTitle = toCamelCase(newItem.title);
-                console.log(itemTitle);
-                allProjects[currProj][itemTitle] = newItem;
-                dom.displayItem(newItem);
-                dom.remEditMenu(".edit-form");
-
-            }
-        });
-    });
-}
-
-function listenAllWhenProject(currProj) {
+function listenAllWhenProject(currProj, mode) {
     const subbutt = document.querySelectorAll(".submit-item-edit");
     subbutt.forEach(button => {
         button.addEventListener("click", () => {
             const form = document.querySelector(".edit-form");
             if (form[0].value === 'Title') {
                 dom.remEditMenu(".edit-form");
-                dom.displayAddItem(currProj);
-                listenSubmitItem(currProj);
+                dom.displayAddItem(allProjects[currProj]);
+                listenAddItem(currProj);
             } else {
                 const newItem = createItem(
                     form[0].value,
@@ -123,7 +98,8 @@ function listenAllWhenProject(currProj) {
                 allProjects[currProj][itemTitle] = newItem;
                 dom.displayItem(newItem);   
                 dom.remEditMenu(".edit-form");
-                dom.displayAddItem(currProj);
+
+                if (mode !== 'edit') dom.displayAddItem(currProj);
     
                 listenEditRemove(currProj, itemTitle);
             }
@@ -140,7 +116,7 @@ function listenEdit(currProj) {
             dom.removeItem(currentItem);
             delete allProjects[currProj][currentItem];
 
-            listenAllWhenProject(currProj);
+            listenAllWhenProject(currProj, 'edit');
         });
     }); 
     
@@ -167,18 +143,18 @@ function listenAddItem(projectName) {
 }
 
 function dropItems(e) {
-    const currProj = e.target.id;
-    if (status[e.target.id] === undefined ||
-    status[e.target.id] === "display") {
-        dom.displayAllItems(allProjects[e.target.id]);
-        status[e.target.id] = "remove";
+    const currProj = e.target.parentNode.id;
+    if (status[currProj] === undefined ||
+    status[currProj] === "display") {
+        dom.displayAllItems(allProjects[currProj]);
+        status[currProj] = "remove";
 
         listenEdit(currProj);
         listenAddItem(currProj);
     
     } else {
-        dom.removeAllItems(allProjects[e.target.id]);
-        status[e.target.id] = "display";
+        dom.removeAllItems(allProjects[currProj]);
+        status[currProj] = "display";
     }
 }
 
@@ -187,6 +163,56 @@ function listenProject() {
     projectButtons.forEach(project => {
         project.addEventListener("click", (e) => {
             dropItems(e);
+        });
+    });
+}
+
+function listenAddProject() {
+    const addProject = document.querySelector("#add-project");
+    addProject.addEventListener("click", () => {
+        const dropSelectors = dom.dropForm();
+        
+        dropSelectors.submit.addEventListener("click", (e) => {
+            const name = toCamelCase(e.target.previousSibling.value);
+            if (name === "") {
+                dom.unDropForm(dropSelectors.form);
+            } else if (!(name === "")) {
+                const newProject = createProject(name);
+                allProjects[newProject.title] = newProject;
+                dom.displayProject(newProject);
+                dom.unDropForm(dropSelectors.form);
+                
+                const projectButton = document.querySelector(
+                    '#' + newProject.title
+                    );
+                projectButton.addEventListener('click', (e) => {
+                    dropItems(e);
+                });
+
+                const remButton = document.querySelector(
+                    '#' + name + 'RemoveButt'
+                );
+                remButton.addEventListener('click', (e) => {
+                    dom.removeProject(e.target.parentNode.id);
+                    delete allProjects[e.target.parentNode.id];
+                });
+    
+            } else {
+                dom.unDropForm();
+            }
+        });
+    
+    });
+}
+
+function listenRemProject() {
+    const projectRemButtons = document.querySelectorAll(
+        '.projectRemButtons'
+    );
+    projectRemButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            dom.removeProject(e.target.parentNode.id);
+            delete allProjects[e.target.parentNode.id];
         });
     });
 }
@@ -200,33 +226,7 @@ window.addEventListener('unload', savePage);
 dom.displayAllProjects(allProjects);
 
 listenProject();
-
-const addProject = document.querySelector("#add-project");
-addProject.addEventListener("click", (e) => {
-    const dropSelectors = dom.dropForm();
-    
-    dropSelectors.submit.addEventListener("click", (e) => {
-        const name = toCamelCase(e.target.previousSibling.value);
-        if (name === "") {
-            dom.unDropForm(dropSelectors.form);
-        } else if (!(name === "")) {
-            const newProject = createProject(name);
-
-            allProjects[newProject.title] = newProject;
-            dom.displayProject(newProject);
-            dom.unDropForm(dropSelectors.form);
-            
-            const projectButton = document.querySelector('#' + newProject.title);
-            projectButton.addEventListener('click', (e) => {
-                dropItems(e);
-            });
-
-        } else {
-            dom.unDropForm();
-        }
-    });
-
-});
-
+listenRemProject();
+listenAddProject();
 
 export { getAllProjects, getItem };

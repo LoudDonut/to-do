@@ -96,18 +96,35 @@ const dom = {
     },
     
     displayProject: function(project) {
-        const projectButt = document.createElement("button");
-        projectButt.id = project.title;
+        const projectCont = document.createElement('div');
+        const projectButt = document.createElement('button');
+        const removeButt = document.createElement('button');
+
+        projectCont.id = project.title;
+        projectButt.id = project.title + 'Button';
         projectButt.classList.add("projectButtons");
+        removeButt.id = project.title + 'RemoveButt';
+        removeButt.classList.add("projectRemButtons");
         
         projectButt.textContent = project.title;
-        sidebar.appendChild(projectButt);
+        removeButt.textContent = 'x';
+        projectCont.appendChild(projectButt);
+        projectCont.appendChild(removeButt);
+        sidebar.appendChild(projectCont);
     },
     
-    displayAllProjects: function(allProjects) {
+    displayAllProjects: function(allProjects) { //displayProject repeated
         for (let project in allProjects) {
             dom.displayProject(allProjects[project]);
         }
+    },
+
+    removeProject: function(projectName) {
+        const projectCont = document.querySelector(
+            '#' + projectName
+        );
+        
+        sidebar.removeChild(projectCont);
     },
     
     dropForm: function() {
