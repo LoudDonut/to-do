@@ -21,6 +21,10 @@ header h1 {
     flex-direction: column;
 }
 
+.addButton {
+    order: 9999;
+}
+
 .item-container {
     margin-top: 20px;
 }
@@ -38,8 +42,20 @@ header h1 {
     background-color: #CCCCCC;
 }
 
+.projectContainer {
+    display: flex;
+}
+
+.projectContainer .projectButtons {
+    flex-basis: 90%;
+}
+
+.projectContainer .projectRemButtons {
+    flex-basis: 10%;
+}
+
 #add-project {
-    order: 300;
+    order: 9999;
 }
 
 footer {

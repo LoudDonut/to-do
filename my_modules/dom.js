@@ -101,6 +101,7 @@ const dom = {
         const removeButt = document.createElement('button');
 
         projectCont.id = project.title;
+        projectCont.classList.add('projectContainer');
         projectButt.id = project.title + 'Button';
         projectButt.classList.add("projectButtons");
         removeButt.id = project.title + 'RemoveButt';
