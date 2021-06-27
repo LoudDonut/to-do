@@ -52,16 +52,15 @@ const dom = {
     },
     
     displayAddItem: function(project) {
+        const variableName = toCamelCase(project.title);
         const add = document.createElement("button");
         add.textContent = 'Add Item';
         add.classList.add('addButton');
-        add.id = project.title + "Add";
+        add.id = variableName + "Add";
         content.appendChild(add);
     },
     
     displayAllItems: function(project) {
-        //const projectItemContainer = document.createElement("div");
-        //projectItemContainer.id = project.title + 'Container';
         
         for (let key in project) {
             if (key !== "title" &&
@@ -79,7 +78,9 @@ const dom = {
     },
     
     remProjAddButton: function(project) {
-        const add = document.querySelector("#" + project.title + "Add");
+        const variableName = toCamelCase(project.title);
+
+        const add = document.querySelector("#" + variableName + "Add");
         content.removeChild(add);
     },
     
@@ -95,19 +96,21 @@ const dom = {
         }
     },
     
-    displayProject: function(project) {
+    displayProject: function(projectTitle) {
+        const variableName = toCamelCase(projectTitle);
+
         const projectCont = document.createElement('div');
         const projectButt = document.createElement('button');
         const removeButt = document.createElement('button');
 
-        projectCont.id = project.title;
+        projectCont.id = variableName;
         projectCont.classList.add('projectContainer');
-        projectButt.id = project.title + 'Button';
+        projectButt.id = variableName + 'Button';
         projectButt.classList.add("projectButtons");
-        removeButt.id = project.title + 'RemoveButt';
+        removeButt.id = variableName + 'RemoveButt';
         removeButt.classList.add("projectRemButtons");
         
-        projectButt.textContent = project.title;
+        projectButt.textContent = projectTitle;
         removeButt.textContent = 'x';
         projectCont.appendChild(projectButt);
         projectCont.appendChild(removeButt);
@@ -116,7 +119,7 @@ const dom = {
     
     displayAllProjects: function(allProjects) { //displayProject repeated
         for (let project in allProjects) {
-            dom.displayProject(allProjects[project]);
+            dom.displayProject(allProjects[project].title);
         }
     },
 
@@ -150,11 +153,42 @@ const dom = {
         const form = document.createElement("form");
         form.id = itemName + "Edit";
         form.classList.add("edit-form");
-        itemContainer.forEach(prop => {
-            const editBar = document.createElement("input");
-            editBar.classList.add("edit-bar");
-            editBar.setAttribute("value", prop.textContent)
-            form.appendChild(editBar);
+        itemContainer.forEach((prop, index) => {
+            if (index === 0 || index === 1) {
+                const editBar = document.createElement("input");
+                editBar.classList.add("edit-bar");
+                editBar.setAttribute("value", prop.textContent)
+                form.appendChild(editBar);
+            } else if (index === 2) {
+                const editBar = document.createElement("input");
+                editBar.setAttribute('type', 'date')
+                editBar.classList.add("edit-bar");
+                editBar.setAttribute("value", prop.textContent)
+                form.appendChild(editBar);
+            } else if (index === 3) {
+                for (let i = 0; i < 3; i++) {
+                    const editBar = document.createElement("input");
+                    const label = document.createElement('label');
+                    editBar.setAttribute('name', 'priority');
+                    editBar.setAttribute('type', 'radio');
+                    switch (i) {
+                        case 0:
+                            editBar.setAttribute('value', 'Low');
+                            label.textContent = 'Low';
+                            break;
+                        case 1:
+                            editBar.setAttribute('value', 'Medium');
+                            label.textContent = 'Medium';
+                            break;
+                        case 2:
+                            editBar.setAttribute('value', 'High');
+                            label.textContent = 'High';
+                            break;
+                    }
+                    form.appendChild(label);
+                    form.appendChild(editBar);
+                }
+            }
         });
         const submit = document.createElement("input");
         submit.setAttribute("type", "submit");
@@ -168,9 +202,16 @@ const dom = {
     addToProjectForm: function() {
         const form = document.createElement("form");
         form.classList.add("edit-form");
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 6; i++) {
             const input = document.createElement("input");
             input.classList.add('newItemInputs');
+
+            if (i > 2) {
+                var label = document.createElement('label');
+                form.appendChild(label);
+                input.setAttribute('type', 'radio');
+                input.setAttribute('name', 'priority');
+            }
     
             switch (i) {
                 case 0:
@@ -180,13 +221,22 @@ const dom = {
                     input.setAttribute('value', 'Description');
                     break;
                 case 2:
-                    input.setAttribute('value', 'Date');
+                    input.setAttribute('type', 'date');
                     break;
                 case 3:
-                    input.setAttribute('value', 'Priority');
+                    input.setAttribute('value', 'Low');
+                    label.textContent = 'Low';
+                    break;
+                case 4:
+                    input.setAttribute('value', 'Medium');
+                    label.textContent = 'Medium';
+                    break;
+                case 5:
+                    input.setAttribute('value', 'High');
+                    label.textContent = 'High';
                     break;
             }
-    
+            
             form.appendChild(input);
         }
         const submit = document.createElement("input");

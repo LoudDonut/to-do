@@ -11,7 +11,10 @@ import {
     dom
 } from "../my_modules/dom.js";
 
-let status = {isAdding: false};
+let status = {
+    isAdding: false,
+    projectInUse: ''
+};
 
 const vacation = createProject("vacation");
 const trip = createItem(
@@ -46,6 +49,8 @@ if (Object.entries(localStorage).length === 0) {
 }
 
 //allProjects.vacation = vacation; //for testing
+
+console.log(allProjects);
 
 function getAllProjects() {
     return allProjects;
@@ -88,22 +93,29 @@ function listenAllWhenProject(currProj, mode) {
                 dom.displayAddItem(allProjects[currProj]);
                 listenAddItem(currProj);
             } else {
+                let priority;
+                for (let i = 3; i < 6; i++) {
+                    if (form[i].checked === true) {
+                        priority = form[i].value;
+                        break;
+                    }
+                }
                 const newItem = createItem(
                     form[0].value,
                     form[1].value,
                     form[2].value,
-                    form[3].value
+                    priority
                 );
                 const itemTitle = toCamelCase(newItem.title);
                 allProjects[currProj][itemTitle] = newItem;
                 dom.displayItem(newItem);   
                 dom.remEditMenu(".edit-form");
-
+                
                 if (mode !== 'edit') {
                     dom.displayAddItem(allProjects[currProj]);
-                    listenAddItem(allProjects[currProj].title);
+                    listenAddItem(toCamelCase(allProjects[currProj].title));
                 }
-    
+
                 listenEditRemove(currProj, itemTitle);
             }
         });
@@ -133,28 +145,29 @@ function listenEdit(currProj) {
     });
 }
 
-function listenAddItem(projectName) {
-    const addButton = document.querySelector('#' + projectName + 'Add');
+function listenAddItem(variableName) {
+    const addButton = document.querySelector('#' + variableName + 'Add');
 
         const generateForm = function() {
             dom.addToProjectForm();
-            listenAllWhenProject(projectName);
-            dom.remProjAddButton(allProjects[projectName]);
+            listenAllWhenProject(variableName);
+            dom.remProjAddButton(allProjects[variableName]);
         }
         
         addButton.addEventListener("click", generateForm);
 }
 
-function dropItems(e) {
+function dropItems(e) { //Next time put things like this in dom.js
     const currProj = e.target.parentNode.id;
+
     if (status[currProj] === undefined ||
-    status[currProj] === "display") {
+        status[currProj] === "display") {
+
         dom.displayAllItems(allProjects[currProj]);
         status[currProj] = "remove";
 
         listenEdit(currProj);
         listenAddItem(currProj);
-    
     } else {
         dom.removeAllItems(allProjects[currProj]);
         status[currProj] = "display";
@@ -174,20 +187,20 @@ function listenAddProject() {
     const addProject = document.querySelector("#add-project");
     addProject.addEventListener("click", () => {
         const dropSelectors = dom.dropForm();
-        console.log(dropSelectors.form);
         
         dropSelectors.submit.addEventListener("click", (e) => {
+            const newProjTitle = e.target.previousSibling.value;
             const name = toCamelCase(e.target.previousSibling.value);
             if (name === "") {
                 dom.unDropForm(dropSelectors.form);
             } else if (!(name === "")) {
-                const newProject = createProject(name);
-                allProjects[newProject.title] = newProject;
-                dom.displayProject(newProject);
+                const newProject = createProject(newProjTitle);
+                allProjects[name] = newProject;
+                dom.displayProject(name);
                 dom.unDropForm(dropSelectors.form);
                 
                 const projectButton = document.querySelector(
-                    '#' + newProject.title
+                    '#' + name
                     );
                 projectButton.addEventListener('click', (e) => {
                     dropItems(e);
@@ -232,7 +245,5 @@ dom.displayAllProjects(allProjects);
 listenProject();
 listenRemProject();
 listenAddProject();
-
-console.log(allProjects);
 
 export { getAllProjects, getItem };
