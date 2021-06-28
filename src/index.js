@@ -11,35 +11,12 @@ import {
     dom
 } from "../my_modules/dom.js";
 
+//localStorage.clear(); //for testing
+
 let status = {
     isAdding: false,
     projectInUse: ''
 };
-
-const vacation = createProject("vacation");
-const trip = createItem(
-    "Trip",
-    "Go to the airport, board the plane untill arrival",
-    "20/11/2022",
-    "High"
-);
-const shopping = createItem(
-    "Shopping",
-    "Go to some stores in town and look around",
-    "21/11/2022",
-    "Medium"
-);
-    
-const goBackHome = createItem(
-    "Go back home",
-    "Go to the airport, board the plane untill we're back home",
-    "28/11/2022",
-    "High"
-);
-vacation.addItem(trip);
-vacation.addItem(shopping);
-vacation.addItem(goBackHome);
-//localStorage.clear(); //for testing
             
 if (Object.entries(localStorage).length === 0) {
     var allProjects = {};
@@ -47,10 +24,6 @@ if (Object.entries(localStorage).length === 0) {
     var allProjects = localStorage.getItem('allProjects');
     allProjects = JSON.parse(allProjects);
 }
-
-//allProjects.vacation = vacation; //for testing
-
-console.log(allProjects);
 
 function getAllProjects() {
     return allProjects;
@@ -196,7 +169,7 @@ function listenAddProject() {
             } else if (!(name === "")) {
                 const newProject = createProject(newProjTitle);
                 allProjects[name] = newProject;
-                dom.displayProject(name);
+                dom.displayProject(newProject.title);
                 dom.unDropForm(dropSelectors.form);
                 
                 const projectButton = document.querySelector(
@@ -229,6 +202,9 @@ function listenRemProject() {
     projectRemButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             dom.removeProject(e.target.parentNode.id);
+            if (document.querySelector('#' + e.target.parentNode.id + 'Add')) {
+                dom.remProjAddButton(allProjects[e.target.parentNode.id]);
+            }
             delete allProjects[e.target.parentNode.id];
         });
     });
