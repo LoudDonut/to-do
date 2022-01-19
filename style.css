@@ -1,0 +1,64 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex-basis: 130px;
+    background-color: #DDDDDD;
+}
+
+header h1 {
+    font-size: 40px;
+}
+
+.main-container {
+    display: flex;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.addButton {
+    order: 9999;
+}
+
+.item-container {
+    margin-top: 20px;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0.1;
+    height: 700px;
+    background-color: #CCCCCC;
+}
+
+.projectContainer {
+    display: flex;
+}
+
+.projectContainer .projectButtons {
+    flex-basis: 90%;
+}
+
+.projectContainer .projectRemButtons {
+    flex-basis: 10%;
+}
+
+#add-project {
+    order: 9999;
+}
+
+footer {
+    flex-basis: 100px;
+    background-color: #777777;
+}
